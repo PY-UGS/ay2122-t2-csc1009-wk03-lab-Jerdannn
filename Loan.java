@@ -1,62 +1,59 @@
-package Lab_3;
+package CSC1009_Lab.Lab_3;
 
 public class Loan {
-    //Attributes
+    // Attributes
     private double annualInterestRate;
     private int numberOfYears;
     private double loanAmount;
     private java.util.Date loanDate;
 
-    //Operations
-    //Default constructor
-    public Loan() {}
+    // Operations
+    // Default Constructor
+    public Loan() {
+        this.annualInterestRate = 2.5;
+        this.numberOfYears = 1;
+        this.loanAmount = 1000;
+        // Stores the current datetime
+        this.loanDate = new java.util.Date();
+    }
 
-    public Loan(double interest, int years, double loan) {
-        this.annualInterestRate = interest;
+    public Loan(double ir, int years, double loan) {
+        this.annualInterestRate = ir;
         this.numberOfYears = years;
         this.loanAmount = loan;
         this.loanDate = new java.util.Date();
     }
 
-    //Get
-    public double getAnnualInterestRate() {
-        return annualInterestRate;
-    }
+    // Getters
+    public double getAnnualInterestRate() { return this.annualInterestRate; }
 
-    public int numberOfYears() {
-        return numberOfYears;
-    }
+    public int getNumberOfYears() { return this.numberOfYears; }
 
-    public double getLoanAmount() {
-        return loanAmount;
-    }
+    public double getLoanAmount() { return this.loanAmount; }
 
-    public java.util.Date getLoanDate() {
-        return this.loanDate;
-    }
+    public java.util.Date getLoanDate() { return this.loanDate; }
 
-    //Set
-    public void setAnnualInterestRate(double interest) {
-        this.annualInterestRate = interest;
-    }
+    // Setters
+    public void setAnnualInterestRate(double ir) { this.annualInterestRate = ir; }
 
-    public void setNumberOfYears(int years) {
-        this.numberOfYears = years;
-    }
+    public void setNumberOfYears(int years) { this.numberOfYears = years; }
 
-    public void setLoanAmount(double loan) {
-        this.loanAmount = loan;
-    }
+    public void setLoanAmount(double loan) { this.loanAmount = loan; }
 
-    //Misc.
+    // Misc.
+    // Returns the monthly payment for this loan
     public double getMonthlyPayment() {
-        double top = this.loanAmount * (this.annualInterestRate / 1200);
-        double bottom = 1 - (1 / Math.pow(1 + (this.annualInterestRate / 1200), this.numberOfYears * 12));
+        // Get the monthly interest rate
+        double monthlyInterestRate = getAnnualInterestRate() / 1200;
 
-        return top / bottom;
+        double monthlyPayment = (getLoanAmount() * monthlyInterestRate) /
+        (1 - (1 / Math.pow(1 + monthlyInterestRate, getNumberOfYears() * 12)));
+        return monthlyPayment;
     }
 
+    // Returns the total payment for this loan
     public double getTotalPayment() {
-        return this.getMonthlyPayment() * this.numberOfYears * 12;
+        double totalPayment = getMonthlyPayment() * this.numberOfYears * 12;
+        return totalPayment;
     }
 }
